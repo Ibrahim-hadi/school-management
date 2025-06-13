@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EduManage - Complete School Management System</title>
+    <title>CJHSS</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+    <script src="https://cdn.emailjs.com/sdk/2.3.2/email.min.js"></script>
     <style>
         :root {
             --primary: #4e73df;
@@ -415,45 +415,6 @@
             background: white;
         }
         
-        .forgot-link {
-            display: inline-block;
-            margin-top: 10px;
-            color: var(--primary);
-            text-decoration: none;
-            font-size: 0.95rem;
-            font-weight: 500;
-            transition: var(--transition);
-        }
-        
-        .forgot-link:hover {
-            text-decoration: underline;
-        }
-        
-        .modal-footer {
-            padding: 15px 25px;
-            background: var(--light);
-            border-bottom-left-radius: var(--border-radius);
-            border-bottom-right-radius: var(--border-radius);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-top: 1px solid #e3e6f0;
-        }
-        
-        .switch-modal {
-            background: none;
-            border: none;
-            color: var(--primary);
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 0.95rem;
-            transition: var(--transition);
-        }
-        
-        .switch-modal:hover {
-            text-decoration: underline;
-        }
-        
         /* Footer Styles */
         footer {
             background: linear-gradient(135deg, var(--dark), #1a2035);
@@ -860,48 +821,26 @@
             margin-bottom: 0;
         }
         
-        /* OTP Verification Styles */
-        .otp-container {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin: 20px 0;
+        /* Admin Edit Styles */
+        .edit-form {
+            background: #f8f9fc;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-top: 1.5rem;
         }
         
-        .otp-input {
-            width: 50px;
-            height: 50px;
-            text-align: center;
-            font-size: 1.5rem;
-            border: 2px solid #d1d3e2;
-            border-radius: 8px;
-            transition: var(--transition);
-        }
-        
-        .otp-input:focus {
-            border-color: var(--primary);
-            outline: none;
-            box-shadow: 0 0 0 0.2rem rgba(78, 115, 223, 0.25);
-        }
-        
-        .timer {
-            text-align: center;
-            font-weight: 600;
-            margin: 10px 0;
+        .edit-form h4 {
+            margin-bottom: 1rem;
             color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
         
-        .resend-link {
-            text-align: center;
-            display: block;
-            margin-top: 15px;
-            color: var(--primary);
-            cursor: pointer;
-            font-weight: 600;
-        }
-        
-        .resend-link:hover {
-            text-decoration: underline;
+        .edit-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
         }
         
         /* Alert Styles */
@@ -931,27 +870,10 @@
             color: #36b9cc;
             border: 1px solid rgba(54, 185, 204, 0.3);
         }
-        
-        /* Admin Edit Styles */
-        .edit-form {
-            background: #f8f9fc;
-            padding: 1.5rem;
-            border-radius: 10px;
-            margin-top: 1.5rem;
-        }
-        
-        .edit-form h4 {
-            margin-bottom: 1rem;
-            color: var(--dark);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .edit-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
+        a{
+            color: var(--primary);
+            text-decoration: none;
+            transition: color 0.3s;
         }
         
         /* Responsive Styles */
@@ -998,19 +920,9 @@
                 gap: 15px;
             }
             
-            .switch-modal {
-                margin-top: 10px;
-            }
-            
             .form-row {
                 flex-direction: column;
                 gap: 0;
-            }
-            
-            .otp-input {
-                width: 40px;
-                height: 40px;
-                font-size: 1.2rem;
             }
         }
     </style>
@@ -1021,7 +933,7 @@
         <header>
             <div class="logo">
                 <i class="fas fa-graduation-cap"></i>
-                <h1>EduManage School System</h1>
+                <h1>CHEMNAD JAMAATH HSS</h1>
             </div>
             <nav>
                 <ul>
@@ -1037,7 +949,7 @@
         <!-- Main Content -->
         <main>
             <section class="welcome-section">
-                <h2>Welcome to EduManage School System</h2>
+                <h2>Welcome to CJHSS offial website</h2>
                 <p>A comprehensive platform designed to streamline school management, enhance communication, and provide seamless access to educational resources for teachers, students, and administrators.</p>
                 <div class="action-buttons">
                     <button class="btn btn-teacher" id="showTeacherLogin"><i class="fas fa-sign-in-alt"></i> Teacher Login</button>
@@ -1096,10 +1008,10 @@
             <section id="teacherDashboard" class="dashboard">
                 <div class="dashboard-header">
                     <div class="user-info">
-                        <div class="user-avatar">TJ</div>
+                        <div class="user-avatar">T</div>
                         <div>
                             <h2>Teacher Dashboard</h2>
-                            <p>Welcome</p>
+                            <p id="teacherWelcomeMsg">Welcome, Teacher</p>
                         </div>
                     </div>
                     <button class="btn btn-teacher" id="logoutTeacher"><i class="fas fa-sign-out-alt"></i> Logout</button>
@@ -1154,10 +1066,10 @@
             <section id="studentDashboard" class="dashboard">
                 <div class="dashboard-header">
                     <div class="user-info">
-                        <div class="user-avatar">SJ</div>
+                        <div class="user-avatar">S</div>
                         <div>
                             <h2>Student Dashboard</h2>
-                            <p>Welcome</p>
+                            <p id="studentWelcomeMsg">Welcome, Student</p>
                         </div>
                     </div>
                     <button class="btn btn-student" id="logoutStudent"><i class="fas fa-sign-out-alt"></i> Logout</button>
@@ -1194,6 +1106,16 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="dash-card student">
+                        <div class="card-text">
+                            <h3 id="currentSubjects">6</h3>
+                            <p>to call teacher</p>
+                        </div>
+                        <div class="card-icon student">
+                            <i class="fas fa-book"></i>
+                        </div>
+                    </div>
                 
                 <div class="dashboard-content">
                     <div class="content-header">
@@ -1286,14 +1208,6 @@
                                         <input type="text" id="teacherId" class="form-control" placeholder="Teacher ID">
                                     </div>
                                 </div>
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        <input type="text" id="teacherSubject" class="form-control" placeholder="Subject">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="text" id="teacherClass" class="form-control" placeholder="Class/Grade">
-                                    </div>
-                                </div>
                                 <button class="btn btn-teacher" onclick="addTeacher()"><i class="fas fa-plus"></i> Add Teacher</button>
                             </div>
                         </div>
@@ -1317,14 +1231,6 @@
                                         <input type="text" id="studentId" class="form-control" placeholder="Student ID">
                                     </div>
                                 </div>
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        <input type="text" id="studentGrade" class="form-control" placeholder="Class/Grade">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="text" id="studentSection" class="form-control" placeholder="Section">
-                                    </div>
-                                </div>
                                 <button class="btn btn-student" onclick="addStudent()"><i class="fas fa-plus"></i> Add Student</button>
                             </div>
                         </div>
@@ -1336,42 +1242,36 @@
                         <div class="edit-grid">
                             <div class="form-group">
                                 <label>Active Classes</label>
-                                <input type="number" id="editActiveClasses" class="form-control" value="5">
+                                <input type="number" id="editActiveClasses" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label>Total Students</label>
-                                <input type="number" id="editTotalStudents" class="form-control" value="142">
+                                <input type="number" id="editTotalStudents" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label>Pending Assignments</label>
-                                <input type="number" id="editPendingAssignments" class="form-control" value="12">
+                                <input type="number" id="editPendingAssignments" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label>Overall Average (%)</label>
-                                <input type="number" id="editOverallAverage" class="form-control" value="92" min="0" max="100">
+                                <input type="number" id="editOverallAverage" class="form-control" min="0" max="100">
                             </div>
                             <div class="form-group">
                                 <label>Current Subjects</label>
-                                <input type="number" id="editCurrentSubjects" class="form-control" value="6">
+                                <input type="number" id="editCurrentSubjects" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label>Upcoming Assignments</label>
-                                <input type="number" id="editUpcomingAssignments" class="form-control" value="3">
+                                <input type="number" id="editUpcomingAssignments" class="form-control">
                             </div>
                         </div>
                         <div class="form-group">
                             <label>Class Schedule</label>
-                            <textarea id="editClassSchedule" class="form-control" rows="4">Monday: Mathematics (9:00 AM), Science (11:00 AM)
-Tuesday: English (9:00 AM), History (11:00 AM)
-Wednesday: Mathematics (9:00 AM), Physical Education (1:00 PM)
-Thursday: Science Lab (10:00 AM), Art (2:00 PM)
-Friday: English (9:00 AM), Mathematics (11:00 AM)</textarea>
+                            <textarea id="editClassSchedule" class="form-control" rows="4"></textarea>
                         </div>
                         <div class="form-group">
                             <label>Recent Activities</label>
-                            <textarea id="editRecentActivities" class="form-control" rows="4">Your Grade 10 Mathematics class has a test scheduled for Friday.
-You have 5 ungraded assignments in Grade 8 Science.
-Parent meeting scheduled for 3 students next week.</textarea>
+                            <textarea id="editRecentActivities" class="form-control" rows="4"></textarea>
                         </div>
                         <button class="btn btn-admin" onclick="saveDashboardData()"><i class="fas fa-save"></i> Save Changes</button>
                     </div>
@@ -1387,7 +1287,7 @@ Parent meeting scheduled for 3 students next week.</textarea>
                     <ul class="contact-info">
                         <li><i class="fas fa-map-marker-alt"></i> 123 Education Street, Academic City</li>
                         <li><i class="fas fa-phone"></i> (123) 456-7890</li>
-                        <li><i class="fas fa-envelope"></i> info@edumanage.edu</li>
+                        <li><i class="fas fa-envelope"></i> info@CJHSS.edu</li>
                         <li><i class="fas fa-clock"></i> Mon-Fri: 8:00 AM - 5:00 PM</li>
                     </ul>
                 </div>
@@ -1416,7 +1316,7 @@ Parent meeting scheduled for 3 students next week.</textarea>
             </div>
             
             <div class="copyright">
-                <p>&copy; 2023 EduManage School System. All rights reserved.</p>
+                <p>&copy; 2025 Chemnad Jama-ath HSS. All rights reserved.</p>
             </div>
         </footer>
     </div>
@@ -1435,13 +1335,8 @@ Parent meeting scheduled for 3 students next week.</textarea>
                         <input type="text" id="teacherIdInput" class="form-control" placeholder="Enter your ID" required>
                     </div>
                     <div class="form-group">
-                        <label for="teacherClass"><i class="fas fa-graduation-cap"></i> Class/Grade</label>
-                        <input type="text" id="teacherClassInput" class="form-control" placeholder="Enter your class" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="teacherPassword"><i class="fas fa-lock"></i> Password</label>
-                        <input type="password" id="teacherPassword" class="form-control" placeholder="Enter your password" required>
-                        <a href="#" class="forgot-link" id="teacherForgotPassword"><i class="fas fa-key"></i> Forgot Password?</a>
+                        <label for="teacherName"><i class="fas fa-user"></i> Full Name</label>
+                        <input type="text" id="teacherNameInput" class="form-control" placeholder="Enter your full name" required>
                     </div>
                     <button type="button" class="btn btn-teacher" style="width:100%" onclick="teacherLogin()"><i class="fas fa-sign-in-alt"></i> Login</button>
                 </form>
@@ -1466,13 +1361,8 @@ Parent meeting scheduled for 3 students next week.</textarea>
                         <input type="text" id="studentIdInput" class="form-control" placeholder="Enter your ID" required>
                     </div>
                     <div class="form-group">
-                        <label for="studentClass"><i class="fas fa-graduation-cap"></i> Class/Grade</label>
-                        <input type="text" id="studentClassInput" class="form-control" placeholder="Enter your class" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="studentPassword"><i class="fas fa-lock"></i> Password</label>
-                        <input type="password" id="studentPassword" class="form-control" placeholder="Enter your password" required>
-                        <a href="#" class="forgot-link" id="studentForgotPassword"><i class="fas fa-key"></i> Forgot Password?</a>
+                        <label for="studentName"><i class="fas fa-user"></i> Full Name</label>
+                        <input type="text" id="studentNameInput" class="form-control" placeholder="Enter your full name" required>
                     </div>
                     <button type="button" class="btn btn-student" style="width:100%" onclick="studentLogin()"><i class="fas fa-sign-in-alt"></i> Login</button>
                 </form>
@@ -1499,7 +1389,6 @@ Parent meeting scheduled for 3 students next week.</textarea>
                     <div class="form-group">
                         <label for="adminPassword"><i class="fas fa-lock"></i> Password</label>
                         <input type="password" id="adminPassword" class="form-control" placeholder="Enter admin password" required>
-                        <a href="#" class="forgot-link" id="adminForgotPassword"><i class="fas fa-key"></i> Forgot Password?</a>
                     </div>
                     <button type="button" class="btn btn-admin" style="width:100%" onclick="adminLogin()"><i class="fas fa-sign-in-alt"></i> Login</button>
                 </form>
@@ -1572,70 +1461,78 @@ Parent meeting scheduled for 3 students next week.</textarea>
         </div>
     </div>
     
-    <!-- Forgot Password Modal -->
-    <div class="modal" id="forgotPasswordModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3><i class="fas fa-key"></i> Reset Password</h3>
-                <button class="close-modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div id="forgotPasswordStep1">
-                    <form id="forgotPasswordForm">
-                        <div class="form-group">
-                            <label for="resetEmail"><i class="fas fa-envelope"></i> Email Address</label>
-                            <input type="email" id="resetEmail" class="form-control" placeholder="Enter your registered email" required>
-                        </div>
-                        <button type="button" class="btn btn-teacher" style="width:100%" onclick="sendOTP()"><i class="fas fa-paper-plane"></i> Send OTP</button>
-                    </form>
-                </div>
-                <div id="forgotPasswordStep2" style="display:none;">
-                    <div class="alert alert-info">
-                        <i class="fas fa-info-circle"></i> OTP has been sent to your email. Please check your inbox.
-                    </div>
-                    <div class="form-group">
-                        <label for="otpCode"><i class="fas fa-shield-alt"></i> Enter OTP</label>
-                        <div class="otp-container">
-                            <input type="text" class="otp-input" maxlength="1" oninput="moveToNext(this, 1)">
-                            <input type="text" class="otp-input" maxlength="1" oninput="moveToNext(this, 2)">
-                            <input type="text" class="otp-input" maxlength="1" oninput="moveToNext(this, 3)">
-                            <input type="text" class="otp-input" maxlength="1" oninput="moveToNext(this, 4)">
-                            <input type="text" class="otp-input" maxlength="1" oninput="moveToNext(this, 5)">
-                            <input type="text" class="otp-input" maxlength="1">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="newPassword"><i class="fas fa-lock"></i> New Password</label>
-                        <input type="password" id="newPassword" class="form-control" placeholder="Enter new password" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="confirmPassword"><i class="fas fa-lock"></i> Confirm Password</label>
-                        <input type="password" id="confirmPassword" class="form-control" placeholder="Confirm new password" required>
-                    </div>
-                    <button type="button" class="btn btn-teacher" style="width:100%" onclick="resetPassword()"><i class="fas fa-sync-alt"></i> Reset Password</button>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <p>Check your email for password reset instructions</p>
-            </div>
-        </div>
-    </div>
-    
     <script>
-        // Sample data for teachers and students
-        let teachers = [
-            { id: "T-001", name: "Thomas Johnson", subject: "Mathematics", class: "Grade 10" },
-            { id: "T-002", name: "Emily Smith", subject: "Science", class: "Grade 9" },
-            { id: "T-003", name: "Robert Williams", subject: "English", class: "Grade 11" },
-            { id: "T-004", name: "Michelle Davis", subject: "History", class: "Grade 8" }
-        ];
+        // Initialize EmailJS with your credentials
+        (function() {
+            emailjs.init("YOUR_EMAILJS_USER_ID"); // Replace with your EmailJS user ID
+        })();
         
-        let students = [
-            { id: "S-001", name: "Sarah Johnson", grade: "Grade 10", section: "A" },
-            { id: "S-002", name: "Michael Brown", grade: "Grade 9", section: "B" },
-            { id: "S-003", name: "Jennifer Parker", grade: "Grade 11", section: "C" },
-            { id: "S-004", name: "David Wilson", grade: "Grade 8", section: "A" }
-        ];
+        // Load data from localStorage
+        function loadData() {
+            // Load teachers
+            const storedTeachers = localStorage.getItem('teachers');
+            teachers = storedTeachers ? JSON.parse(storedTeachers) : [
+                { id: "T-001", name: "Thomas Johnson", class: "Grade 10" },
+                { id: "T-002", name: "Emily Smith", class: "Grade 9" },
+                { id: "T-003", name: "Robert Williams", class: "Grade 11" },
+                { id: "T-004", name: "Michelle Davis", class: "Grade 8" }
+            ];
+            
+            // Load students
+            const storedStudents = localStorage.getItem('students');
+            students = storedStudents ? JSON.parse(storedStudents) : [
+                { id: "S-001", name: "Sarah Johnson", class: "Grade 10"},
+                { id: "S-002", name: "Michael Brown", class: "Grade 9" },
+                { id: "S-003", name: "Jennifer Parker", class: "Grade 11" },
+                { id: "S-004", name: "David Wilson", class: "Grade 8" }
+            ];
+            
+            // Load dashboard data
+            const storedDashboardData = localStorage.getItem('dashboardData');
+            if (storedDashboardData) {
+                const dashboardData = JSON.parse(storedDashboardData);
+                document.getElementById('activeClasses').textContent = dashboardData.activeClasses;
+                document.getElementById('totalStudents').textContent = dashboardData.totalStudents;
+                document.getElementById('pendingAssignments').textContent = dashboardData.pendingAssignments;
+                document.getElementById('overallAverage').textContent = dashboardData.overallAverage;
+                document.getElementById('currentSubjects').textContent = dashboardData.currentSubjects;
+                document.getElementById('upcomingAssignments').textContent = dashboardData.upcomingAssignments;
+                document.getElementById('classSchedule').innerHTML = dashboardData.classSchedule;
+                document.getElementById('teacherActivities').innerHTML = dashboardData.teacherActivities;
+                
+                // Set edit form values
+                document.getElementById('editActiveClasses').value = dashboardData.activeClasses;
+                document.getElementById('editTotalStudents').value = dashboardData.totalStudents;
+                document.getElementById('editPendingAssignments').value = dashboardData.pendingAssignments;
+                document.getElementById('editOverallAverage').value = dashboardData.overallAverage;
+                document.getElementById('editCurrentSubjects').value = dashboardData.currentSubjects;
+                document.getElementById('editUpcomingAssignments').value = dashboardData.upcomingAssignments;
+                document.getElementById('editClassSchedule').value = dashboardData.classSchedule.replace(/<p>/g, '').replace(/<\/p>/g, '\n');
+                document.getElementById('editRecentActivities').value = dashboardData.teacherActivities.replace(/<p>/g, '').replace(/<\/p>/g, '\n');
+            }
+        }
+        
+        // Save data to localStorage
+        function saveData() {
+            localStorage.setItem('teachers', JSON.stringify(teachers));
+            localStorage.setItem('students', JSON.stringify(students));
+        }
+        
+        // Dashboard data
+        let dashboardData = {
+            activeClasses: "5",
+            totalStudents: "142",
+            pendingAssignments: "12",
+            overallAverage: "92",
+            currentSubjects: "6",
+            upcomingAssignments: "3",
+            classSchedule: "<p><strong>Monday:</strong> Mathematics (9:00 AM), Science (11:00 AM)</p><p><strong>Tuesday:</strong> English (9:00 AM), History (11:00 AM)</p><p><strong>Wednesday:</strong> Mathematics (9:00 AM), Physical Education (1:00 PM)</p><p><strong>Thursday:</strong> Science Lab (10:00 AM), Art (2:00 PM)</p><p><strong>Friday:</strong> English (9:00 AM), Mathematics (11:00 AM)</p>",
+            teacherActivities: "<p><i class=\"fas fa-circle text-primary\"></i> Your Grade 10 Mathematics class has a test scheduled for Friday.</p><p><i class=\"fas fa-circle text-warning\"></i> You have 5 ungraded assignments in Grade 8 Science.</p><p><i class=\"fas fa-circle text-info\"></i> Parent meeting scheduled for 3 students next week.</p>"
+        };
+        
+        // Sample data for teachers and students
+        let teachers = [];
+        let students = [];
         
         // DOM Elements
         const teacherLoginBtn = document.getElementById('teacherLoginBtn');
@@ -1646,7 +1543,6 @@ Parent meeting scheduled for 3 students next week.</textarea>
         const studentLoginModal = document.getElementById('studentLoginModal');
         const adminLoginModal = document.getElementById('adminLoginModal');
         const admissionModal = document.getElementById('admissionModal');
-        const forgotPasswordModal = document.getElementById('forgotPasswordModal');
         const closeModalButtons = document.querySelectorAll('.close-modal');
         const teacherDashboard = document.getElementById('teacherDashboard');
         const studentDashboard = document.getElementById('studentDashboard');
@@ -1671,6 +1567,9 @@ Parent meeting scheduled for 3 students next week.</textarea>
             const weekString = `Week of ${weekStart.toLocaleDateString('en-US', weekOptions)} - ${weekEnd.toLocaleDateString('en-US', weekOptions)}, ${now.getFullYear()}`;
             document.getElementById('studentDate').textContent = weekString;
             
+            // Load data
+            loadData();
+            
             // Load teacher and student lists
             loadTeachers();
             loadStudents();
@@ -1690,25 +1589,6 @@ Parent meeting scheduled for 3 students next week.</textarea>
         document.getElementById('showStudentPortal').addEventListener('click', () => showModal(studentLoginModal));
         document.getElementById('showAdminPortal').addEventListener('click', () => showModal(adminLoginModal));
         document.getElementById('showAdmission').addEventListener('click', () => showModal(admissionModal));
-        
-        // Forgot password links
-        document.getElementById('teacherForgotPassword').addEventListener('click', (e) => {
-            e.preventDefault();
-            hideModal(teacherLoginModal);
-            showModal(forgotPasswordModal);
-        });
-        
-        document.getElementById('studentForgotPassword').addEventListener('click', (e) => {
-            e.preventDefault();
-            hideModal(studentLoginModal);
-            showModal(forgotPasswordModal);
-        });
-        
-        document.getElementById('adminForgotPassword').addEventListener('click', (e) => {
-            e.preventDefault();
-            hideModal(adminLoginModal);
-            showModal(forgotPasswordModal);
-        });
         
         // Close modals
         closeModalButtons.forEach(button => {
@@ -1748,27 +1628,35 @@ Parent meeting scheduled for 3 students next week.</textarea>
         // Login functions
         function teacherLogin() {
             const teacherId = document.getElementById('teacherIdInput').value;
-            const teacherClass = document.getElementById('teacherClassInput').value;
-            const password = document.getElementById('teacherPassword').value;
+            const teacherName = document.getElementById('teacherNameInput').value;
             
-            if (teacherId && teacherClass && password) {
+            // Find teacher in the list
+            const teacher = teachers.find(t => t.id === teacherId && t.name === teacherName);
+            
+            if (teacher) {
+                // Update welcome message with ID and name
+                document.getElementById('teacherWelcomeMsg').textContent = `Welcome, ${teacher.name} (ID: ${teacher.id})`;
                 hideModal(teacherLoginModal);
                 showDashboard(teacherDashboard);
             } else {
-                alert('Please fill in all fields');
+                alert('Invalid teacher credentials. Please check your ID and name.');
             }
         }
         
         function studentLogin() {
             const studentId = document.getElementById('studentIdInput').value;
-            const studentClass = document.getElementById('studentClassInput').value;
-            const password = document.getElementById('studentPassword').value;
+            const studentName = document.getElementById('studentNameInput').value;
             
-            if (studentId && studentClass && password) {
+            // Find student in the list
+            const student = students.find(s => s.id === studentId && s.name === studentName);
+            
+            if (student) {
+                // Update welcome message with ID and name
+                document.getElementById('studentWelcomeMsg').textContent = `Welcome, ${student.name} (ID: ${student.id})`;
                 hideModal(studentLoginModal);
                 showDashboard(studentDashboard);
             } else {
-                alert('Please fill in all fields');
+                alert('Invalid student credentials. Please check your ID and name.');
             }
         }
         
@@ -1776,7 +1664,7 @@ Parent meeting scheduled for 3 students next week.</textarea>
             const username = document.getElementById('adminUsername').value;
             const password = document.getElementById('adminPassword').value;
             
-            if (username === 'vijayan' && password === 'vijayank@1234') {
+            if (username === 'admin' && password === 'admin123') {
                 hideModal(adminLoginModal);
                 showDashboard(adminDashboard);
             } else {
@@ -1784,36 +1672,38 @@ Parent meeting scheduled for 3 students next week.</textarea>
             }
         }
         
-        // Admission enquiry
+        // Admission enquiry with EmailJS
         function submitEnquiry() {
-            alert('Thank you for your admission enquiry! We will contact you soon.');
-            hideModal(admissionModal);
-        }
-        
-        // OTP functions
-        function sendOTP() {
-            document.getElementById('forgotPasswordStep1').style.display = 'none';
-            document.getElementById('forgotPasswordStep2').style.display = 'block';
-        }
-        
-        function resetPassword() {
-            const newPassword = document.getElementById('newPassword').value;
-            const confirmPassword = document.getElementById('confirmPassword').value;
+            // Get form data
+            const parentName = document.getElementById('parentName').value;
+            const studentName = document.getElementById('studentNameInput').value;
+            const studentAge = document.getElementById('studentAge').value;
+            const grade = document.getElementById('grade').value;
+            const contactEmail = document.getElementById('contactEmail').value;
+            const contactPhone = document.getElementById('contactPhone').value;
+            const enquiryDetails = document.getElementById('enquiryDetails').value;
             
-            if (newPassword !== confirmPassword) {
-                alert('Passwords do not match!');
-                return;
-            }
+            // Prepare email parameters
+            const templateParams = {
+                parent_name: parentName,
+                student_name: studentName,
+                student_age: studentAge,
+                grade: grade,
+                contact_email: contactEmail,
+                contact_phone: contactPhone,
+                enquiry_details: enquiryDetails
+            };
             
-            alert('Password has been reset successfully!');
-            hideModal(forgotPasswordModal);
-        }
-        
-        function moveToNext(input, nextIndex) {
-            if (input.value.length === 1) {
-                const nextInput = document.querySelectorAll('.otp-input')[nextIndex];
-                if (nextInput) nextInput.focus();
-            }
+            // Send email using EmailJS
+            emailjs.send('YOUR_EMAILJS_SERVICE_ID', 'YOUR_EMAILJS_TEMPLATE_ID', templateParams)
+                .then(function(response) {
+                    console.log('SUCCESS!', response.status, response.text);
+                    alert('Thank you for your admission enquiry! We will contact you soon.');
+                    hideModal(admissionModal);
+                }, function(error) {
+                    console.log('FAILED...', error);
+                    alert('There was an error sending your enquiry. Please try again later.');
+                });
         }
         
         // Teacher/Student management
@@ -1827,7 +1717,7 @@ Parent meeting scheduled for 3 students next week.</textarea>
                     <div class="user-avatar-sm">${teacher.name.charAt(0)}</div>
                     <div class="user-details">
                         <h4>${teacher.name} (${teacher.id})</h4>
-                        <p>${teacher.subject} - ${teacher.class}</p>
+                        <p>${teacher.class}</p>
                     </div>
                     <div class="user-actions">
                         <button class="action-btn edit-btn" onclick="editTeacher('${teacher.id}')"><i class="fas fa-edit"></i></button>
@@ -1848,7 +1738,7 @@ Parent meeting scheduled for 3 students next week.</textarea>
                     <div class="user-avatar-sm">${student.name.charAt(0)}</div>
                     <div class="user-details">
                         <h4>${student.name} (${student.id})</h4>
-                        <p>${student.grade} - Section ${student.section}</p>
+                        <p>${student.class}</p>
                     </div>
                     <div class="user-actions">
                         <button class="action-btn edit-btn" onclick="editStudent('${student.id}')"><i class="fas fa-edit"></i></button>
@@ -1862,45 +1752,48 @@ Parent meeting scheduled for 3 students next week.</textarea>
         function addTeacher() {
             const name = document.getElementById('teacherName').value;
             const id = document.getElementById('teacherId').value;
-            const subject = document.getElementById('teacherSubject').value;
-            const teacherClass = document.getElementById('teacherClass').value;
             
-            if (!name || !id || !subject || !teacherClass) {
+            if (!name || !id) {
                 alert('Please fill in all fields');
                 return;
             }
             
-            teachers.push({ id, name, subject, class: teacherClass });
+            // Add class information
+            const teacherClass = prompt("Enter teacher's class/grade:", "Grade 10");
+            if (!teacherClass) return;
+            
+            teachers.push({ id, name, class: teacherClass });
+            saveData();
             loadTeachers();
             alert('Teacher added successfully!');
             
             // Clear form
             document.getElementById('teacherName').value = '';
             document.getElementById('teacherId').value = '';
-            document.getElementById('teacherSubject').value = '';
-            document.getElementById('teacherClass').value = '';
         }
         
         function addStudent() {
             const name = document.getElementById('studentName').value;
             const id = document.getElementById('studentId').value;
-            const grade = document.getElementById('studentGrade').value;
-            const section = document.getElementById('studentSection').value;
             
-            if (!name || !id || !grade || !section) {
+            if (!name || !id) {
                 alert('Please fill in all fields');
                 return;
             }
             
-            students.push({ id, name, grade, section });
+            // Add class information
+            const studentClass = prompt("Enter student's class/grade:", "Grade 10");
+            const studentno = prompt("Enter student's phone no:", "1234567890");
+            if (!studentClass || !studentno) return;
+            
+            students.push({ id, name, class: studentClass, phone: studentno });
+            saveData();
             loadStudents();
             alert('Student added successfully!');
             
             // Clear form
             document.getElementById('studentName').value = '';
             document.getElementById('studentId').value = '';
-            document.getElementById('studentGrade').value = '';
-            document.getElementById('studentSection').value = '';
         }
         
         function editTeacher(id) {
@@ -1909,12 +1802,10 @@ Parent meeting scheduled for 3 students next week.</textarea>
                 const newName = prompt('Edit teacher name:', teacher.name);
                 if (newName !== null) teacher.name = newName;
                 
-                const newSubject = prompt('Edit subject:', teacher.subject);
-                if (newSubject !== null) teacher.subject = newSubject;
-                
                 const newClass = prompt('Edit class:', teacher.class);
                 if (newClass !== null) teacher.class = newClass;
                 
+                saveData();
                 loadTeachers();
             }
         }
@@ -1925,12 +1816,14 @@ Parent meeting scheduled for 3 students next week.</textarea>
                 const newName = prompt('Edit student name:', student.name);
                 if (newName !== null) student.name = newName;
                 
-                const newGrade = prompt('Edit grade:', student.grade);
-                if (newGrade !== null) student.grade = newGrade;
+                const newClass = prompt('Edit class:', student.class);
+                if (newClass !== null) student.class = newClass;
+                // Edit phone number
+                if (!student.phone) student.phone = ''; // Ensure phone exists
+                const newPhone = prompt('Edit phone number:', student.phone);
+                if (newPhone !== null) student.phone = newPhone;
                 
-                const newSection = prompt('Edit section:', student.section);
-                if (newSection !== null) student.section = newSection;
-                
+                saveData();
                 loadStudents();
             }
         }
@@ -1938,6 +1831,7 @@ Parent meeting scheduled for 3 students next week.</textarea>
         function deleteTeacher(id) {
             if (confirm('Are you sure you want to delete this teacher?')) {
                 teachers = teachers.filter(t => t.id !== id);
+                saveData();
                 loadTeachers();
             }
         }
@@ -1945,6 +1839,7 @@ Parent meeting scheduled for 3 students next week.</textarea>
         function deleteStudent(id) {
             if (confirm('Are you sure you want to delete this student?')) {
                 students = students.filter(s => s.id !== id);
+                saveData();
                 loadStudents();
             }
         }
@@ -1954,7 +1849,6 @@ Parent meeting scheduled for 3 students next week.</textarea>
             const filteredTeachers = teachers.filter(teacher => 
                 teacher.name.toLowerCase().includes(searchTerm) || 
                 teacher.id.toLowerCase().includes(searchTerm) ||
-                teacher.subject.toLowerCase().includes(searchTerm) ||
                 teacher.class.toLowerCase().includes(searchTerm)
             );
             
@@ -1967,7 +1861,7 @@ Parent meeting scheduled for 3 students next week.</textarea>
                     <div class="user-avatar-sm">${teacher.name.charAt(0)}</div>
                     <div class="user-details">
                         <h4>${teacher.name} (${teacher.id})</h4>
-                        <p>${teacher.subject} - ${teacher.class}</p>
+                        <p>${teacher.class}</p>
                     </div>
                     <div class="user-actions">
                         <button class="action-btn edit-btn" onclick="editTeacher('${teacher.id}')"><i class="fas fa-edit"></i></button>
@@ -1983,8 +1877,7 @@ Parent meeting scheduled for 3 students next week.</textarea>
             const filteredStudents = students.filter(student => 
                 student.name.toLowerCase().includes(searchTerm) || 
                 student.id.toLowerCase().includes(searchTerm) ||
-                student.grade.toLowerCase().includes(searchTerm) ||
-                student.section.toLowerCase().includes(searchTerm)
+                student.class.toLowerCase().includes(searchTerm)
             );
             
             const studentList = document.getElementById('studentList');
@@ -1996,7 +1889,7 @@ Parent meeting scheduled for 3 students next week.</textarea>
                     <div class="user-avatar-sm">${student.name.charAt(0)}</div>
                     <div class="user-details">
                         <h4>${student.name} (${student.id})</h4>
-                        <p>${student.grade} - Section ${student.section}</p>
+                        <p>${student.class}</p>
                     </div>
                     <div class="user-actions">
                         <button class="action-btn edit-btn" onclick="editStudent('${student.id}')"><i class="fas fa-edit"></i></button>
@@ -2009,23 +1902,48 @@ Parent meeting scheduled for 3 students next week.</textarea>
         
         // Save dashboard data
         function saveDashboardData() {
-            // Update teacher dashboard
-            document.getElementById('activeClasses').textContent = document.getElementById('editActiveClasses').value;
-            document.getElementById('totalStudents').textContent = document.getElementById('editTotalStudents').value;
-            document.getElementById('pendingAssignments').textContent = document.getElementById('editPendingAssignments').value;
-            document.getElementById('teacherActivities').innerHTML = document.getElementById('editRecentActivities').value
-                .split('\n')
-                .map(activity => `<p><i class="fas fa-circle text-primary"></i> ${activity}</p>`)
-                .join('');
+            // Get form values
+            const activeClasses = document.getElementById('editActiveClasses').value;
+            const totalStudents = document.getElementById('editTotalStudents').value;
+            const pendingAssignments = document.getElementById('editPendingAssignments').value;
+            const overallAverage = document.getElementById('editOverallAverage').value;
+            const currentSubjects = document.getElementById('editCurrentSubjects').value;
+            const upcomingAssignments = document.getElementById('editUpcomingAssignments').value;
+            const classSchedule = document.getElementById('editClassSchedule').value;
+            const recentActivities = document.getElementById('editRecentActivities').value;
             
-            // Update student dashboard
-            document.getElementById('overallAverage').textContent = document.getElementById('editOverallAverage').value + '%';
-            document.getElementById('currentSubjects').textContent = document.getElementById('editCurrentSubjects').value;
-            document.getElementById('upcomingAssignments').textContent = document.getElementById('editUpcomingAssignments').value;
-            document.getElementById('classSchedule').innerHTML = document.getElementById('editClassSchedule').value
-                .split('\n')
+            // Update dashboard display
+            document.getElementById('activeClasses').textContent = activeClasses;
+            document.getElementById('totalStudents').textContent = totalStudents;
+            document.getElementById('pendingAssignments').textContent = pendingAssignments;
+            document.getElementById('overallAverage').textContent = overallAverage + '%';
+            document.getElementById('currentSubjects').textContent = currentSubjects;
+            document.getElementById('upcomingAssignments').textContent = upcomingAssignments;
+            
+            // Format class schedule
+            const formattedClassSchedule = classSchedule.split('\n')
                 .map(item => `<p>${item}</p>`)
                 .join('');
+            document.getElementById('classSchedule').innerHTML = formattedClassSchedule;
+            
+            // Format recent activities
+            const formattedRecentActivities = recentActivities.split('\n')
+                .map(activity => `<p><i class="fas fa-circle text-primary"></i> ${activity}</p>`)
+                .join('');
+            document.getElementById('teacherActivities').innerHTML = formattedRecentActivities;
+            
+            // Save to localStorage
+            dashboardData = {
+                activeClasses,
+                totalStudents,
+                pendingAssignments,
+                overallAverage,
+                currentSubjects,
+                upcomingAssignments,
+                classSchedule: formattedClassSchedule,
+                teacherActivities: formattedRecentActivities
+            };
+            localStorage.setItem('dashboardData', JSON.stringify(dashboardData));
             
             alert('Dashboard data updated successfully!');
         }
@@ -2056,12 +1974,10 @@ Parent meeting scheduled for 3 students next week.</textarea>
             dashboard.style.display = 'none';
         }
         
-        // Initialize by hiding all dashboards
-        window.addEventListener('DOMContentLoaded', () => {
-            teacherDashboard.style.display = 'none';
-            studentDashboard.style.display = 'none';
-            adminDashboard.style.display = 'none';
-        });
+        // Logout buttons
+        document.getElementById('logoutTeacher').addEventListener('click', () => hideDashboard(teacherDashboard));
+        document.getElementById('logoutStudent').addEventListener('click', () => hideDashboard(studentDashboard));
+        document.getElementById('logoutAdmin').addEventListener('click', () => hideDashboard(adminDashboard));
     </script>
 </body>
 </html>
