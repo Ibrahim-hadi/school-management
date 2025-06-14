@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EduManage - School Management System</title>
+    <title>CJHSS</title>
+    <link rel="shortcut icon" href="cj logo-modified.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -31,13 +32,16 @@
         }
         
         body {
-            background: linear-gradient(135deg, #f5f7fa 0%, #e4e7f1 100%);
+            background:url('cj2.jpg') no-repeat center center/cover;
             color: #333;
             line-height: 1.6;
             min-height: 100vh;
             padding: 20px;
             position: relative;
             overflow-x: hidden;
+        }
+        a{
+            text-decoration: none;
         }
         
         body::before {
@@ -541,7 +545,7 @@
         /* Dashboard Styles */
         .dashboard {
             display: none;
-            background: white;
+            background:white;
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
             padding: 2rem;
@@ -1101,7 +1105,7 @@
         <header>
             <div class="logo">
                 <i class="fas fa-graduation-cap"></i>
-                <h1>EduManage School System</h1>
+                <h1>CJHSS School System</h1>
             </div>
             <nav>
                 <ul>
@@ -1117,7 +1121,7 @@
         <!-- Main Content -->
         <main>
             <section class="welcome-section">
-                <h2>Welcome to EduManage School System</h2>
+                <h2>Welcome to CJHSS School System</h2>
                 <p>A comprehensive platform designed to streamline school management, enhance communication, and provide seamless access to educational resources for teachers, students, and administrators.</p>
                 <div class="action-buttons">
                     <button class="btn btn-teacher" id="showTeacherLogin"><i class="fas fa-sign-in-alt"></i> Teacher Login</button>
@@ -1363,7 +1367,7 @@
                             <div>
                                 <h3 id="classTeacherName">Thomas Johnson</h3>
                                 <p id="classTeacherSubject">Science Teacher - Grade 11</p>
-                                <p><i class="fas fa-envelope"></i> <span id="classTeacherEmail">thomas.johnson@edumanage.edu</span></p>
+                                <p><i class="fas fa-envelope"></i> <span id="classTeacherEmail">thomas.johnson@CJHSS.edu</span></p>
                                 <p><i class="fas fa-phone"></i> <span id="classTeacherPhone">(555) 123-4567</span></p>
                                 <button class="btn btn-teacher" style="margin-top: 15px;"><i class="fas fa-envelope"></i> Send Message</button>
                             </div>
@@ -1591,7 +1595,7 @@
                     <ul class="contact-info">
                         <li><i class="fas fa-map-marker-alt"></i> 123 Education Street, Academic City</li>
                         <li><i class="fas fa-phone"></i> (123) 456-7890</li>
-                        <li><i class="fas fa-envelope"></i> info@edumanage.edu</li>
+                        <li><i class="fas fa-envelope"></i> info@CJHSS.edu</li>
                         <li><i class="fas fa-clock"></i> Mon-Fri: 8:00 AM - 5:00 PM</li>
                     </ul>
                 </div>
@@ -1600,16 +1604,15 @@
                     <h3>Quick Links</h3>
                     <ul class="quick-links">
                         <li><a href="#"><i class="fas fa-arrow-right"></i> Home</a></li>
-                        <li><a href="#"><i class="fas fa-arrow-right"></i> Academic Calendar</a></li>
-                        <li><a href="#"><i class="fas fa-arrow-right"></i> School News</a></li>
-                        <li><a href="#"><i class="fas fa-arrow-right"></i> Events</a></li>
+                        <li><a href="https://11047cjhsschemnad.blogspot.com/p/blog-page.html"><i class="fas fa-arrow-right"></i> School News</a></li>
+                        <li><a href="https://11047cjhsschemnad.blogspot.com/p/blog-page.html"><i class="fas fa-arrow-right"></i> Events</a></li>
                         <li><a href="#"><i class="fas fa-arrow-right"></i> Contact Us</a></li>
                     </ul>
                 </div>
                 
                 <div class="footer-section">
                     <h3>About Our School</h3>
-                    <p>EduManage School is committed to providing quality education with modern facilities and experienced teaching staff, preparing students for future success.</p>
+                    <p>CJHSS School System is committed to providing quality education with modern facilities and experienced teaching staff, preparing students for future success.</p>
                     <div class="social-links">
                         <a href="#"><i class="fab fa-facebook-f"></i></a>
                         <a href="#"><i class="fab fa-twitter"></i></a>
@@ -1620,7 +1623,7 @@
             </div>
             
             <div class="copyright">
-                <p>&copy; 2023 EduManage School System. All rights reserved.</p>
+                <p>&copy; 2023 CJHSS School System. All rights reserved.</p>
             </div>
         </footer>
     </div>
@@ -1778,8 +1781,8 @@
             // Load teachers
             const storedTeachers = localStorage.getItem('teachers');
             teachers = storedTeachers ? JSON.parse(storedTeachers) : [
-                { id: "T-001", name: "Thomas Johnson", subject: "Science", grade: "11", phone: "(555) 123-4567", email: "thomas.johnson@edumanage.edu" },
-                { id: "T-002", name: "Emily Smith", subject: "Mathematics", grade: "10", phone: "(555) 987-6543", email: "emily.smith@edumanage.edu" }
+                { id: "T-001", name: "Thomas Johnson", subject: "Science", grade: "11", phone: "(555) 123-4567", email: "thomas.johnson@CJHSS.edu" },
+                { id: "T-002", name: "Emily Smith", subject: "Mathematics", grade: "10", phone: "(555) 987-6543", email: "emily.smith@CJHSS.edu" }
             ];
             
             // Load students
