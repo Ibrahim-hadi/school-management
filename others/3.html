@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduManage - Enhanced School Management System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4e73df;
+            --secondary: #1cc88a;
+            --info: #36b9cc;
+            --warning: #f6c23e;
+            --danger: #e74a3b;
+            --dark: #2e3a59;
+            --light: #f8f9fc;
+            --gray: #858796;
+            --white: #ffffff;
+            --border-radius: 12px;
+            --transition: all 0.3s ease;
+        }
+        * { box-sizing: border-box; font-family: 'Poppins', Arial, sans-serif; }
+        body { background: linear-gradient(135deg, #f5f7fa 0%, #e4e7f1 100%); min-height: 100vh; margin: 0; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 1rem; }
+        header, footer { background: #fff; border-radius: var(--border-radius); box-shadow: 0 0.15rem 1.75rem 0 rgba(58,59,69,0.15); margin-bottom: 2rem; padding: 1rem 2rem; }
+        nav ul { display: flex; gap: 1rem; list-style: none; padding: 0; }
+        nav a { text-decoration: none; color: var(--dark); font-weight: 600; padding: 0.5rem 1rem; border-radius: 30px; transition: var(--transition); }
+        nav a.active, nav a:hover { background: var(--primary); color: #fff; }
+        main { background: #fff; border-radius: var(--border-radius); box-shadow: 0 0.15rem 1.75rem 0 rgba(58,59,69,0.10); padding: 2rem; }
+        .dashboard, .portal-section { display: none; }
+        .dashboard.active, .portal-section.active { display: block; }
+        .responsive-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+        @media (max-width: 700px) { .responsive-grid { grid-template-columns: 1fr; } nav ul { flex-direction: column; } }
+        /* Add more styles as needed for cards, modals, forms, etc. */
+    </style>
+</head>
+<body>
+<div class="container">
+    <header>
+        <div style="display:flex;align-items:center;gap:1rem;">
+            <i class="fas fa-graduation-cap" style="font-size:2rem;color:var(--primary)"></i>
+            <h1>EduManage School System</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#" class="active" id="navHome">Home</a></li>
+                <li><a href="#" id="navTeacher">Teacher Portal</a></li>
+                <li><a href="#" id="navStudent">Student Portal</a></li>
+                <li><a href="#" id="navAdmin">Admin Portal</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section id="homeSection" class="portal-section active">
+            <h2>Welcome to EduManage</h2>
+            <p>Modern, responsive school management for teachers, students, and administrators.</p>
+            <div class="responsive-grid">
+                <div style="background:var(--light);padding:1.5rem;border-radius:var(--border-radius);">
+                    <h3>🧑‍🏫 Teacher Portal</h3>
+                    <p>Login to manage classes, attendance, and students.</p>
+                    <button onclick="showSection('teacherLoginSection')">Teacher Login</button>
+                </div>
+                <div style="background:var(--light);padding:1.5rem;border-radius:var(--border-radius);">
+                    <h3>🧑‍🎓 Student Portal</h3>
+                    <p>Login to access your class, teacher, and study materials.</p>
+                    <button onclick="showSection('studentLoginSection')">Student Login</button>
+                </div>
+                <div style="background:var(--light);padding:1.5rem;border-radius:var(--border-radius);">
+                    <h3>🛠️ Admin Portal</h3>
+                    <p>Manage teachers, students, classes, and materials.</p>
+                    <button onclick="showSection('adminLoginSection')">Admin Login</button>
+                </div>
+            </div>
+        </section>
+        <!-- Teacher Login Section -->
+        <section id="teacherLoginSection" class="portal-section">
+            <h2>Teacher Login</h2>
+            <form onsubmit="event.preventDefault(); teacherLogin();">
+                <input type="text" id="teacherIdInput" placeholder="Teacher ID" required><br><br>
+                <input type="text" id="teacherNameInput" placeholder="Full Name" required><br><br>
+                <button type="submit">Login</button>
+                <button type="button" onclick="showSection('homeSection')">Back</button>
+            </form>
+        </section>
+        <!-- Student Login Section -->
+        <section id="studentLoginSection" class="portal-section">
+            <h2>Student Login</h2>
+            <form onsubmit="event.preventDefault(); studentLogin();">
+                <input type="text" id="studentIdInput" placeholder="Student ID" required><br><br>
+                <input type="text" id="studentNameInput" placeholder="Full Name" required><br><br>
+                <button type="submit">Login</button>
+                <button type="button" onclick="showSection('homeSection')">Back</button>
+            </form>
+        </section>
+        <!-- Admin Login Section -->
+        <section id="adminLoginSection" class="portal-section">
+            <h2>Admin Login</h2>
+            <form onsubmit="event.preventDefault(); adminLogin();">
+                <input type="text" id="adminUsername" placeholder="Username" required><br><br>
+                <input type="password" id="adminPassword" placeholder="Password" required><br><br>
+                <button type="submit">Login</button>
+                <button type="button" onclick="showSection('homeSection')">Back</button>
+            </form>
+        </section>
+        <!-- Teacher Dashboard -->
+        <section id="teacherDashboard" class="dashboard">
+            <h2>Teacher Dashboard</h2>
+            <div id="teacherInfo"></div>
+            <div id="teacherClasses"></div>
+            <div id="teacherStudents"></div>
+            <div id="attendanceRegister"></div>
+            <button onclick="logout()">Logout</button>
+        </section>
+        <!-- Student Dashboard -->
+        <section id="studentDashboard" class="dashboard">
+            <h2>Student Dashboard</h2>
+            <div id="studentInfo"></div>
+            <div id="classTeacherProfile"></div>
+            <div id="studyMaterials"></div>
+            <button onclick="logout()">Logout</button>
+        </section>
+        <!-- Admin Dashboard -->
+        <section id="adminDashboard" class="dashboard">
+            <h2>Admin Dashboard</h2>
+            <div id="adminActions"></div>
+            <div id="adminManagement"></div>
+            <button onclick="logout()">Logout</button>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2023 EduManage School System. All rights reserved.</p>
+    </footer>
+</div>
+<script>
+// ... JS for navigation and login ...
+function showSection(id) {
+    document.querySelectorAll('.portal-section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.dashboard').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+}
+function logout() {
+    showSection('homeSection');
+}
+// Add event listeners for nav
+['navHome','navTeacher','navStudent','navAdmin'].forEach(id => {
+    document.getElementById(id).onclick = function() {
+        if(id==='navHome') showSection('homeSection');
+        if(id==='navTeacher') showSection('teacherLoginSection');
+        if(id==='navStudent') showSection('studentLoginSection');
+        if(id==='navAdmin') showSection('adminLoginSection');
+    };
+});
+// Placeholder login functions
+function teacherLogin() {
+    // TODO: Implement teacher login, show dashboard, load teacher info/classes/students/attendance
+    showSection('teacherDashboard');
+}
+function studentLogin() {
+    // TODO: Implement student login, show dashboard, load info, class teacher, study materials
+    showSection('studentDashboard');
+}
+function adminLogin() {
+    // TODO: Implement admin login, show dashboard, load management actions
+    showSection('adminDashboard');
+}
+</script>
+</body>
+</html>
