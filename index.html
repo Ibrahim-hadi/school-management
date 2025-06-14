@@ -1020,6 +1020,14 @@
             border-bottom: 1px solid #e3e6f0;
         }
         
+        .attendance-status {
+            padding: 8px;
+            border-radius: 6px;
+            border: 1px solid #d1d3e2;
+            background: white;
+            cursor: pointer;
+        }
+        
         /* Responsive Styles */
         @media (max-width: 900px) {
             .management-grid {
@@ -1278,6 +1286,9 @@
                         </div>
                         <div class="attendance-actions">
                             <button class="btn btn-teacher" id="saveAttendance"><i class="fas fa-save"></i> Save Attendance</button>
+                            <div id="attendanceMessage" class="alert alert-success" style="display:none;">
+                                <i class="fas fa-check-circle"></i> Attendance saved successfully!
+                            </div>
                         </div>
                     </div>
                     
@@ -1782,17 +1793,18 @@
             
             // Load classes
             const storedClasses = localStorage.getItem('classes');
-            classes = storedClasses ? JSON.parse(storedClasses) : [
-                { id: "C-001", name: "11A", grade: "11", teacherId: "T-001", students: ["S-001", "S-002"] },
-                { id: "C-002", name: "11B", grade: "11", teacherId: "T-001", students: ["S-003"] },
-                { id: "C-003", name: "11C", grade: "11", teacherId: "T-001", students: ["S-004"] }
-            ];
+            if (storedClasses) {
+                classes = JSON.parse(storedClasses);
+            } else {
+                classes = generateClassDivisions();
+                localStorage.setItem('classes', JSON.stringify(classes));
+            }
             
             // Load study materials
             const storedMaterials = localStorage.getItem('studyMaterials');
             studyMaterials = storedMaterials ? JSON.parse(storedMaterials) : [
-                { id: "M-001", title: "Science Chapter 1", description: "Introduction to Biology", grade: "11", file: "science_chapter1.pdf" },
-                { id: "M-002", title: "Math Algebra Guide", description: "Algebra concepts and practice problems", grade: "11", file: "algebra_guide.pdf" }
+                { id: "M-001", title: "Science Chapter 1", description: "Introduction to Biology", grade: "11", file: "science_chapter1.pdf", content: "This is the content of Science Chapter 1" },
+                { id: "M-002", title: "Math Algebra Guide", description: "Algebra concepts and practice problems", grade: "11", file: "algebra_guide.pdf", content: "This is the content of the Algebra Guide" }
             ];
             
             // Load attendance
@@ -1887,6 +1899,13 @@
             
             // Setup save attendance button
             document.getElementById('saveAttendance').addEventListener('click', saveAttendance);
+            
+            // Setup attendance class change event
+            document.getElementById('attendanceClass').addEventListener('change', function() {
+                if (this.value) {
+                    loadAttendanceTable(this.value);
+                }
+            });
         });
         
         // Show modals
@@ -2214,7 +2233,8 @@
                 title, 
                 description, 
                 grade,
-                file: file || 'document.pdf'
+                file: file || 'document.pdf',
+                content: "This is the content for " + title
             });
             saveData();
             loadStudyMaterials();
@@ -2471,7 +2491,7 @@
                     </div>
                     <p><strong>Students:</strong> ${cls.students.length}</p>
                     <p><strong>Schedule:</strong> Mon, Wed, Fri - 9:00 AM</p>
-                    <button class="btn btn-teacher" style="margin-top: 15px;">View Class Details</button>
+                    <button class="btn btn-teacher" onclick="viewClassDetails('${cls.id}')" style="margin-top: 15px;">View Class Details</button>
                 `;
                 teacherClassesGrid.appendChild(card);
             });
@@ -2535,7 +2555,7 @@
                     </div>
                     <h4>${material.title}</h4>
                     <p>${material.description}</p>
-                    <button class="btn btn-primary" style="margin-top: 15px;"><i class="fas fa-download"></i> Download</button>
+                    <button class="btn btn-primary" onclick="downloadMaterial('${material.id}')" style="margin-top: 15px;"><i class="fas fa-download"></i> Download</button>
                 `;
                 materialsGrid.appendChild(card);
             });
@@ -2556,7 +2576,7 @@
                     </div>
                     <h4>${material.title}</h4>
                     <p>${material.description}</p>
-                    <button class="btn btn-primary" style="margin-top: 15px;"><i class="fas fa-download"></i> Download</button>
+                    <button class="btn btn-primary" onclick="downloadMaterial('${material.id}')" style="margin-top: 15px;"><i class="fas fa-download"></i> Download</button>
                 `;
                 materialsGrid.appendChild(card);
             });
@@ -2575,6 +2595,53 @@
             }
         }
         
+        // Attendance functions
+        function loadAttendanceTable(classId) {
+            const classObj = classes.find(c => c.id === classId);
+            if (!classObj) return;
+            
+            const tableBody = document.getElementById('attendanceTable');
+            tableBody.innerHTML = '';
+            
+            const date = document.getElementById('attendanceDate').value;
+            
+            // Find existing attendance for this class and date
+            let existingAttendance = null;
+            if (date) {
+                existingAttendance = attendance.find(a => 
+                    a.classId === classId && a.date === date
+                );
+            }
+            
+            classObj.students.forEach(studentId => {
+                const student = students.find(s => s.id === studentId);
+                if (student) {
+                    // Check if we have existing attendance for this student
+                    let status = 'present';
+                    if (existingAttendance) {
+                        const studentRecord = existingAttendance.records.find(r => r.studentId === studentId);
+                        if (studentRecord) {
+                            status = studentRecord.status;
+                        }
+                    }
+                    
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${student.name}</td>
+                        <td>${student.id}</td>
+                        <td>
+                            <select class="attendance-status" data-student="${student.id}">
+                                <option value="present" ${status === 'present' ? 'selected' : ''}>Present</option>
+                                <option value="absent" ${status === 'absent' ? 'selected' : ''}>Absent</option>
+                                <option value="late" ${status === 'late' ? 'selected' : ''}>Late</option>
+                            </select>
+                        </td>
+                    `;
+                    tableBody.appendChild(row);
+                }
+            });
+        }
+        
         function saveAttendance() {
             const date = document.getElementById('attendanceDate').value;
             const classId = document.getElementById('attendanceClass').value;
@@ -2584,7 +2651,79 @@
                 return;
             }
             
-            alert('Attendance saved successfully!');
+            const statusSelects = document.querySelectorAll('.attendance-status');
+            const records = [];
+            
+            statusSelects.forEach(select => {
+                const studentId = select.getAttribute('data-student');
+                records.push({
+                    studentId: studentId,
+                    status: select.value
+                });
+            });
+            
+            // Check if attendance already exists for this date and class
+            const existingIndex = attendance.findIndex(a => 
+                a.date === date && a.classId === classId
+            );
+            
+            if (existingIndex !== -1) {
+                // Update existing attendance
+                attendance[existingIndex].records = records;
+            } else {
+                // Add new attendance record
+                attendance.push({
+                    date: date,
+                    classId: classId,
+                    records: records
+                });
+            }
+            
+            saveData();
+            
+            // Show success message
+            const message = document.getElementById('attendanceMessage');
+            message.style.display = 'block';
+            message.classList.remove('alert-error');
+            message.classList.add('alert-success');
+            message.innerHTML = '<i class="fas fa-check-circle"></i> Attendance saved successfully!';
+            
+            // Hide message after 3 seconds
+            setTimeout(() => {
+                message.style.display = 'none';
+            }, 3000);
+        }
+        
+        // Download material function
+        function downloadMaterial(id) {
+            const material = studyMaterials.find(m => m.id === id);
+            if (!material) return;
+            
+            // Create a Blob with the material content
+            const blob = new Blob([material.content], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            
+            // Create a temporary link to trigger the download
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = material.file;
+            document.body.appendChild(a);
+            a.click();
+            
+            // Clean up
+            setTimeout(() => {
+                document.body.removeChild(a);
+                window.URL.revokeObjectURL(url);
+            }, 0);
+        }
+        
+        // View class details
+        function viewClassDetails(classId) {
+            const cls = classes.find(c => c.id === classId);
+            if (cls) {
+                const teacher = teachers.find(t => t.id === cls.teacherId);
+                alert(`Class Details:\n\nName: ${cls.name}\nGrade: ${cls.grade}\nTeacher: ${teacher ? teacher.name : 'Not assigned'}\nStudents: ${cls.students.length}`);
+            }
         }
         
         // Helper functions
@@ -2624,6 +2763,24 @@
         document.getElementById('logoutTeacher').addEventListener('click', () => hideDashboard(teacherDashboard));
         document.getElementById('logoutStudent').addEventListener('click', () => hideDashboard(studentDashboard));
         document.getElementById('logoutAdmin').addEventListener('click', () => hideDashboard(adminDashboard));
+        
+        // Add 8th, 9th, 10th classes with divisions A-Z if not present
+        function generateClassDivisions() {
+            let divisions = [];
+            ['8', '9', '10'].forEach(grade => {
+                for(let i=0; i<26; i++) {
+                    const division = String.fromCharCode(65 + i); // 'A' to 'Z'
+                    divisions.push({
+                        id: `C-${grade}${division}`,
+                        name: `${grade}${division}`,
+                        grade: grade,
+                        teacherId: '',
+                        students: []
+                    });
+                }
+            });
+            return divisions;
+        }
     </script>
 </body>
 </html>
