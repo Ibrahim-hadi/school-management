@@ -1325,7 +1325,7 @@
     }
 </style> -->
 
-<!-- <style>
+<style>
     /* Additional responsive styles */
     @media (max-width: 768px) {
         /* Login modals */
@@ -1461,7 +1461,113 @@
             margin-bottom: 0.5rem;
         }
     }
-</style> -->
+</style>
+<style>
+/* Add these styles at the end of existing CSS */
+
+/* Responsive Modals */
+@media (max-width: 768px) {
+    .modal-content {
+        width: 95%;
+        max-width: 95%;
+        padding: 15px;
+    }
+    
+    .modal-header {
+        padding: 15px;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .modal-header h3 {
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+    }
+    
+    .form-group {
+        margin-bottom: 15px;
+    }
+    
+    .form-control {
+        padding: 12px;
+    }
+    
+    .btn {
+        padding: 12px;
+        font-size: 0.9rem;
+    }
+    
+    .form-row {
+        flex-direction: column;
+        gap: 15px;
+    }
+}
+
+/* Responsive Management Grid */
+@media (max-width: 900px) {
+    .management-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .management-card {
+        padding: 1.2rem;
+    }
+    
+    .search-box {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .search-box input,
+    .search-box button {
+        width: 100%;
+        border-radius: 8px;
+    }
+    
+    .user-list li {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    
+    .user-details {
+        min-width: 65%;
+    }
+    
+    .user-actions {
+        margin-top: 10px;
+        flex-wrap: wrap;
+    }
+    
+    .add-user-form {
+        padding: 1.2rem;
+    }
+    
+    .form-row .form-group {
+        min-width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .management-card {
+        padding: 1rem;
+    }
+    
+    .user-list li {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .user-avatar-sm {
+        align-self: flex-start;
+    }
+    
+    .user-actions {
+        align-self: flex-end;
+    }
+}
+</style>
 </head>
 <body>
     <div class="container">
