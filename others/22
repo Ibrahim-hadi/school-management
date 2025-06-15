@@ -1,0 +1,147 @@
+<div class="dashboard-content">
+                    <div class="content-header">
+                        <h3>Management Actions</h3>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn btn-teacher" id="manageTeachersBtn"><i class="fas fa-users"></i> Manage Teachers</button>
+                        <button class="btn btn-student" id="manageStudentsBtn"><i class="fas fa-user-graduate"></i> Manage Students</button>
+                        <button class="btn btn-admin" id="manageClassesBtn"><i class="fas fa-chalkboard"></i> Manage Classes</button>
+                        <button class="btn btn-info" id="manageMaterialsBtn"><i class="fas fa-book"></i> Manage Materials</button>
+                    </div>
+                    
+                    <!-- Teacher Management Section -->
+                    <div class="management-grid" id="teacherManagement" style="display:none;">
+                        <div class="management-card">
+                            <h3><i class="fas fa-chalkboard-teacher"></i> Teacher Management</h3>
+                            <div class="search-box">
+                                <input type="text" id="searchTeacher" placeholder="Search teachers..." oninput="searchTeachers()">
+                                <button><i class="fas fa-search"></i></button>
+                            </div>
+                            <ul class="user-list" id="teacherList">
+                                <!-- Teachers will be loaded here -->
+                            </ul>
+                            <div class="add-user-form">
+                                <h4><i class="fas fa-plus-circle"></i> Add New Teacher</h4>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <input type="text" id="teacherName" class="form-control" placeholder="Full Name">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" id="teacherId" class="form-control" placeholder="Teacher ID">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <input type="text" id="teacherSubject" class="form-control" placeholder="Subject">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" id="teacherGrade" class="form-control" placeholder="Grade">
+                                    </div>
+                                </div>
+                                <button class="btn btn-teacher" onclick="addTeacher()"><i class="fas fa-plus"></i> Add Teacher</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Student Management Section -->
+                    <div class="management-grid" id="studentManagement" style="display:none;">
+                        <div class="management-card">
+                            <h3><i class="fas fa-user-graduate"></i> Student Management</h3>
+                            <div class="search-box">
+                                <input type="text" id="searchStudent" placeholder="Search students..." oninput="searchStudents()">
+                                <button><i class="fas fa-search"></i></button>
+                            </div>
+                            <ul class="user-list" id="studentList">
+                                <!-- Students will be loaded here -->
+                            </ul>
+                            <div class="add-user-form">
+                                <h4><i class="fas fa-plus-circle"></i> Add New Student</h4>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <input type="text" id="studentName" class="form-control" placeholder="Full Name">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" id="studentId" class="form-control" placeholder="Student ID">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <select id="studentClass" class="form-control">
+                                            <option value="">Select Class</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="tel" id="studentPhone" class="form-control" placeholder="Phone Number">
+                                    </div>
+                                </div>
+                                <button class="btn btn-student" onclick="addStudent()"><i class="fas fa-plus"></i> Add Student</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Class Management Section -->
+                    <div class="management-grid" id="classManagement" style="display:none;">
+                        <div class="management-card">
+                            <h3><i class="fas fa-chalkboard"></i> Class Management</h3>
+                            <div class="search-box">
+                                <input type="text" id="searchClass" placeholder="Search classes..." oninput="searchClasses()">
+                                <button><i class="fas fa-search"></i></button>
+                            </div>
+                            <ul class="user-list" id="classList">
+                                <!-- Classes will be loaded here -->
+                            </ul>
+                            <div class="add-user-form">
+                                <h4><i class="fas fa-plus-circle"></i> Add New Class</h4>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <input type="text" id="className" class="form-control" placeholder="Class Name (e.g., 11A)">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" id="classGrade" class="form-control" placeholder="Grade">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <select id="classTeacher" class="form-control">
+                                            <option value="">Select Teacher</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <button class="btn btn-admission" onclick="addClass()"><i class="fas fa-plus"></i> Add Class</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Materials Management Section -->
+                    <div class="management-grid" id="materialsManagement" style="display:none;">
+                        <div class="management-card">
+                            <h3><i class="fas fa-book"></i> Study Materials Management</h3>
+                            <div class="upload-form">
+                                <h4><i class="fas fa-upload"></i> Upload New Material</h4>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <input type="text" id="materialTitle" class="form-control" placeholder="Title">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" id="materialGrade" class="form-control" placeholder="Grade">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <textarea id="materialDescription" class="form-control" placeholder="Description" rows="2"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label><i class="fas fa-file"></i> Upload File</label>
+                                    <input type="file" id="materialFile" class="form-control">
+                                </div>
+                                <button class="btn btn-info" onclick="uploadMaterial()"><i class="fas fa-upload"></i> Upload Material</button>
+                            </div>
+                            <div class="search-box" style="margin-top: 20px;">
+                                <input type="text" id="searchMaterial" placeholder="Search materials..." oninput="searchMaterials()">
+                                <button><i class="fas fa-search"></i></button>
+                            </div>
+                            <ul class="user-list" id="materialsList">
+                                <!-- Materials will be loaded here -->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
